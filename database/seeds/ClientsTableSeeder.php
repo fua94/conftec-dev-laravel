@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Cliente;
+use App\Models\Empresa;
+use App\Models\Ciudad;
 
 class ClientsTableSeeder extends Seeder
 {
@@ -12,27 +14,36 @@ class ClientsTableSeeder extends Seeder
      */
     public function run()
     {
-        Cliente::create([
+        $cliente1 = Cliente::create([
             'CODIGOCLIENTE' => 'C-0001',
-            'CODIGOEMPRESA' => 'E-0001',
             'NOMBRECLIENTE' => 'jose Salgado',
             'DIRECCIONCLIENTE' => 'Av Maestro',
             'EMPRESACLIENTE' => 'Juan SA',
-            'TIPOCLIENTE' => 'A',
+            'TIPOCLIENTE' => 'C',
             'EMAILCLIENTE' => 'jsalgado@email.com',
             'TELEFONOCLIENTE' => '0974623743',
             'CODIGOCIUDADCLIENTE' => 'UIO'
         ]);
-        Cliente::create([
+        $cliente2 = Cliente::create([
             'CODIGOCLIENTE' => 'C-0002',
-            'CODIGOEMPRESA' => 'E-0001',
             'NOMBRECLIENTE' => 'isa granja',
             'DIRECCIONCLIENTE' => 'Av Colon',
             'EMPRESACLIENTE' => 'Juan SA',
-            'TIPOCLIENTE' => 'A',
+            'TIPOCLIENTE' => 'H',
             'EMAILCLIENTE' => 'igranja@email.com',
             'TELEFONOCLIENTE' => '0945623232',
             'CODIGOCIUDADCLIENTE' => 'UIO'
         ]);
+
+        $empresa1 = Empresa::where('CODIGOEMPRESA', 'E-0000')->first();
+        $empresa2 = Empresa::where('CODIGOEMPRESA', 'E-0001')->first();
+        $ciudad1 = Ciudad::where('CODIGOCIUDAD', 'UIO')->first();
+        $ciudad2 = Ciudad::where('CODIGOCIUDAD', 'GYE')->first();
+
+        $cliente1->empresa()->associate($empresa1)
+                ->ciudad()->associate($ciudad1)->save();
+        $cliente2->empresa()->associate($empresa2)
+                ->ciudad()->associate($ciudad2)->save();
+
     }
 }

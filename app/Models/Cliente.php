@@ -21,4 +21,12 @@ class Cliente extends Model
         'TELEFONOCLIENTE',
         'CODIGOCIUDADCLIENTE'
     ];
+
+    public function empresa(){
+        return $this->belongsTo('App\Models\Empresa', 'CODIGOEMPRESA', 'CODIGOEMPRESA');
+    }
+
+    public function ciudad(){
+        return $this->belongsTo('App\Models\Ciudad', 'CODIGOCIUDADCLIENTE', 'CODIGOCIUDAD');
+    }
 }

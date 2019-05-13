@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Empresa;
+use App\Models\Ciudad;
 
 class ClienteController extends Controller
 {
+    protected $empresas;
+    protected $ciudades;
+
+    public function __construct()
+    {
+        $this->empresas = Empresa::get();
+        $this->ciudades = Ciudad::get();
+    }
+
     public function index()
     {
         $listaClientes = Cliente::get();
@@ -17,14 +28,19 @@ class ClienteController extends Controller
 
     public function create()
     {
-        return view('Clientes/add');
+        return view('Clientes/add', [
+            'empresas' => $this->empresas,
+            'ciudades' => $this->ciudades
+        ]);
     }
 
     public function show($cliente)
     {
-        $cliente = Cliente::findOrFail($cliente);
+        $clienteBuscado = Cliente::findOrFail($cliente);
         return view('Clientes/edit', [
-            'cliente' => $cliente
+            'cliente' => $clienteBuscado,
+            'empresas' => $this->empresas,
+            'ciudades' => $this->ciudades
         ]);
     }
 

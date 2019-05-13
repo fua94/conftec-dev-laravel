@@ -15,16 +15,18 @@ class CreateClientesTable extends Migration
     {
         Schema::create('cliente', function (Blueprint $table) {
             $table->String('CODIGOCLIENTE', 13);
-            $table->String('CODIGOEMPRESA', 15);
+            $table->String('CODIGOEMPRESA', 15)->nullable();
             $table->String('NOMBRECLIENTE', 50);
             $table->String('DIRECCIONCLIENTE');
             $table->String('EMPRESACLIENTE', 75);
             $table->String('TIPOCLIENTE', 1);
             $table->String('EMAILCLIENTE', 50);
             $table->String('TELEFONOCLIENTE', 10);
-            $table->String('CODIGOCIUDADCLIENTE', 3);
+            $table->String('CODIGOCIUDADCLIENTE', 3)->nullable();
+
             $table->primary('CODIGOCLIENTE');
-            //$table->timestamps();
+            $table->foreign('CODIGOEMPRESA')->references('CODIGOEMPRESA')->on('empresa');
+            $table->foreign('CODIGOCIUDADCLIENTE')->references('CODIGOCIUDAD')->on('ciudad');
         });
     }
 

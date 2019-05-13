@@ -51,11 +51,15 @@
                 <td><center>{{$cliente->CODIGOCLIENTE}}</center></td>
                 <td><center>{{$cliente->NOMBRECLIENTE}}</center></td>
                 <td><center>{{$cliente->DIRECCIONCLIENTE}}</center></td>
-                <td><center>{{$cliente->EMPRESACLIENTE}}</center></td>
-                <td><center>{{$cliente->TIPOCLIENTE}}</center></td>
+                <td><center>{{$cliente['EMPRESA']->NOMBREEMPRESA}}</center></td>
+                @if ($cliente->TIPOCLIENTE === 'H')
+                  <td><center>Habitual</center></td>
+                @elseif ($cliente->TIPOCLIENTE === 'C')
+                  <td><center>Casual</center></td>
+                @endif
                 <td><center>{{$cliente->EMAILCLIENTE}}</center></td>
                 <td><center>{{$cliente->TELEFONOCLIENTE}}</center></td>
-                <td><center>{{$cliente->CODIGOCIUDADCLIENTE}}</center></td>
+                <td><center>{{$cliente['CIUDAD']->NOMBRECIUDAD}}</center></td>
 
               </tr>
             @endforeach
