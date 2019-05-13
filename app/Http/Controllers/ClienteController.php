@@ -28,6 +28,14 @@ class ClienteController extends Controller
         ]);
     }
 
+    public function showDeleteView(Request $request)
+    {
+        $cliente = $request->eliminar;
+        return view('Clientes/delete', [
+            'cliente' => $cliente
+        ]);
+    }
+
     public function buscar(Request $request)
     {
         $query = $request->SEARCH;

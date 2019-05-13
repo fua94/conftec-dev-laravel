@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Materialize</title>
+    <title>Materialize - @yield('title')</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,7 +21,7 @@
   <!-- Normal Menu-->
   <nav>
       <div class="nav-wrapper blue darken-3">
-        <a href="#!" class="brand-logo">ConfTec</a>
+        <a href="{{url('/')}}" class="brand-logo">ConfTec</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <!-- Dropdown Trigger -->
@@ -99,11 +99,11 @@
 
     <!-- Dropdown Structure -->
     <ul id="dropdown3" class="dropdown-content">
-      <li><a href="#!">Cliente</a></li>
+      <li><a href="{{url('clientes')}}">Cliente</a></li>
       <li class="divider"></li>
       <li><a href="#!">Pedido</a></li>
       <li class="divider"></li>
-      <li><a href="#">Detalle_Pedido</a></li>     
+      <li><a href="#">Detalle_Pedido</a></li>
       <li class="divider"></li>
     </ul>
 
@@ -131,11 +131,11 @@
       <li><a href="badges.html">Producción</a></li>
       <li><a href="collapsible.html">Despacho</a></li>
     </ul>
-    
+
     @yield('content')
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    
+
     <footer class="page-footer blue darken-1">
       <div class="container">
         <div class="row">
@@ -166,11 +166,11 @@
     <script src="{{asset('js/materialize.min.js')}}"></script>
 
     <script>
-      
+
       document.addEventListener('DOMContentLoaded', function() {
         M.AutoInit();
       });
-      
+
     </script>
 
   </body>

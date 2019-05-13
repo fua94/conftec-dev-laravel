@@ -1,5 +1,7 @@
 @extends('layout.home')
 
+@section('title', 'Añadir Cliente')
+
 @section('content')
 <div id="test2" class="col s12">
       <div class="container section">
@@ -49,14 +51,14 @@
                 <input placeholder="Ingrese Teléfono del cliente" name="TELEFONOCLIENTE" type="text" class="validate" >
                 <label for="TELEFONOCLIENTE">Teléfono</label>
               </div>
-              
+
             </div>
             <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Guardar</button>
             <a class="waves-effect waves-light blue darken-4 btn" href="{{url('/clientes')}}"><i class="material-icons left">cancel</i>Cancelar</a>
-          </form> 
+          </form>
         </div>
       </div>
     </div>
 
-    
+
 @endsection

@@ -1,5 +1,7 @@
 @extends('layout.home')
 
+@section('title', 'Módulo Clientes')
+
 @section('content')
     <div id="test1" class="col s12">
       <div class="container section">
@@ -24,10 +26,10 @@
            <br><br>
           <table>
             <tr>
-              <th colspan="10" class="white-text blue darken-3"><center>Cliente</center></th>
+              <th colspan="10" class="white-text blue darken-3"><center>Clientes</center></th>
             </tr>
             <tr class="white-text blue darken-2">
-              
+
               <td colspan="2"><center>Acciones</center></td>
               <td><center>Código del Cliente</center></td>
               <td><center>Nombre del Cliente</center></td>
@@ -44,12 +46,7 @@
                   <a href="{{url('clientes/'.$cliente->CODIGOCLIENTE)}}"><i class="material-icons left" >edit</i></a>
                 </td>
                 <td>
-                  <form action="{{ route('clientes.destroy', $cliente->CODIGOCLIENTE)}}" method="post">
-                      @csrf
-                      @method('DELETE')
-                      <input name="_method" type="hidden">
-                      <button type="submit" class="btn-flat"><i class="material-icons">delete</i></button>
-                  </form>
+                  <a href="{{url('cliente?eliminar='.$cliente->CODIGOCLIENTE)}}"><i class="material-icons left" >delete</i></a>
                 </td>
                 <td><center>{{$cliente->CODIGOCLIENTE}}</center></td>
                 <td><center>{{$cliente->NOMBRECLIENTE}}</center></td>
@@ -62,7 +59,7 @@
 
               </tr>
             @endforeach
-            
+
           </table>
         </div>
       </div>
