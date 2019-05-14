@@ -10,9 +10,22 @@
             @csrf
             @method('PUT')
             <h2 class="header">Editar Cliente</h2>
+            @if ($errors->any())
+                <div class="col s12">
+                  <div class="card">
+                    <div class="card-content">
+                      <span class="card-title">Error!</span>
+                      @foreach ($errors->all() as $error)
+                      		<span class="helper-text red-text" data-error="wrong" data-success="right">{{$error}}</span>
+                              <br>
+                      	@endforeach
+                    </div>
+                  </div>
+                </div>
+            @endif
             <div class="col s12">
               <div class="input-field col s12">
-                <input placeholder="Ingrese Código del Cliente" name="CODIGOCLIENTE" type="text" class="validate"
+                <input name="CODIGOCLIENTE" disabled type="text" class="validate"
                 value="{{$cliente->CODIGOCLIENTE}}">
                 <label for="CODIGOCLIENTE">Código del cliente *</label>
               </div>
