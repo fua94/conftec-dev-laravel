@@ -117,18 +117,21 @@
     <div id="test2" class="col s12">
       <div class="container section">
         <div class="row">
-          <form>
+          <form method="POST" action="/detallePedido">
+          @csrf
             <h2 class="header">Módulo: Pedidos-Detalle del Pedido</h2>
             <h3 class="header">Insertar Pedidos-Detalle</h3>
             <div class="col s12">
-              <div class="col-sm-6">
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Número de Pedido</label>
                   <select class="form-control" id="numpedido" name="numpedido" onchange="cambioPedido()">
-                      @foreach ($pedidos as $pedidos)
-                      <option value="{{$pedidos->numpedido}}">{{$pedidos->numpedido}}</option>
+                      @foreach ($pedidos as $pedidosR)
+                      <option value="{{$pedidosR->numpedido}}">{{$pedidosR->numpedido}}</option>
                       @endforeach
                   </select>
               </div>
-              <div class="col-sm-6">
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Codigo de Producto</label>
                   <select class="form-control" id="codigoproductot" name="codigoproductot" onchange="cambioProductoT()">
                       @foreach ($productos as $productos)
                       <option value="{{$productos->codigoproductot}}">{{$productos->codigoproductot}}</option>
@@ -136,39 +139,52 @@
                   </select>
               </div>
               <div class="input-field col s12">
-                <input placeholder="Total de Unidades del Pedido" id="totUniPed" type="text" class="validate">
-                <label for="first_name">Total de Unidades del Pedido</label>
+              <label for="totalunidadespedido">Total de Unidades del Pedido</label>
+                <input placeholder="Total de Unidades del Pedido" id="totalunidadespedido" name="totalunidadespedido" type="number" class="validate" min="1" pattern="^[0-9]+">                
+              </div>                                       
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Denominación Talla</label>
+                  <select class="form-control" id="denominaciontalla" name="denominaciontalla" onchange="cambioDTalla()">
+                      @foreach ($tallas as $tallas)
+                      <option value="{{$tallas->denominaciontalla}}">{{$tallas->denominaciontalla}}</option>
+                      @endforeach
+                  </select>                  
               </div>
-              <div class="input-field col s12">
-                <input placeholder="Denominación de la Talla" id="denTall" type="text" class="validate">
-                <label for="first_name">Denominación de la Talla</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Talla" id="talla" type="text" class="validate">
-                <label for="first_name">Talla</label>
+              <div class="select-field col s12">
+              <label for="talla">Talla</label>
+                  <select class="form-control" id="talla" name="talla" onchange="cambioDTalla()">
+                      @foreach ($tallas2 as $tallas)
+                      <option value="{{$tallas->talla}}">{{$tallas->talla}}</option>
+                      @endforeach
+                  </select>                  
               </div>
             </div>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">cancel</i>Cancelar</a>
+            <div class="row">
+            <div class="col-md-5"></div>
+            <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</button>            
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('detallePedido.index') }}"><i class="material-icons left">cancel</i>Cancelar</a>
           </form> 
         </div>
       </div>
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>    
+    <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
           cambioPedido();
           cambioProductoT();
+          cambioDTalla();
+          cambioTalla();
       });
-
       function cambioPedido(){
         var detallesPedidos;
         var pedidos;
         var $dPCombo = $("#numpedido");
-        $dPCombo.empty(); // remove old options
+        //$dPCombo.empty(); // remove old options
     <?php if(isset($detallesPedidos)){
-		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
+		'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
     <?php if(isset($pedidos)){
            echo 'pedidos = '.json_encode($pedidos, JSON_HEX_TAG).';'; }?>
         
@@ -191,7 +207,7 @@ function cambioProductoT(){
         var detallesPedidos;
         var productosT;
         var $dPCombo = $("#codigoproductot");
-        $dPCombo.empty(); // remove old options
+        //$dPCombo.empty(); // remove old options
     <?php if(isset($detallesPedidos)){
 		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
     <?php if(isset($productosT)){
@@ -210,32 +226,56 @@ function cambioProductoT(){
         })
        }
     })
-    //  cambioProductoT();
+    cambioDTalla();
 }
 function cambioDTalla(){
         var detallesPedidos;
-        var productosT;
-        var $dPCombo = $("#codigoproductot");
-        $dPCombo.empty(); // remove old options
+        var denominacionTallas;
+        var $dPCombo = $("#denominaciontalla");
+        //$dPCombo.empty(); // remove old options
     <?php if(isset($detallesPedidos)){
 		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
-    <?php if(isset($productosT)){
-           echo 'productosT = '.json_encode($productosT, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($denominacionTallas)){
+           echo 'denominacionTallas = '.json_encode($denominacionTallas, JSON_HEX_TAG).';'; }?>
         
-        productosT.forEach(function(productoT){
+        denominacionTallas.forEach(function(denominacionTalla){
         
-       if(productoT.codigoproductot==document.getElementById('codigoproductot').value){
+       if(denominacionTalla.denominaciontalla==document.getElementById('denominaciontalla').value){
         
         detallesPedidos.forEach(function(detallesPedido){
-            if(detallesPedido.codigoproductot==productoT.codigoproductot)
+            if(detallesPedido.denominaciontalla==denominacionTalla.denominaciontalla)
             {
-                var option = $('<option></option>').attr("value", detallesPedidos.codigoproductot);
+                var option = $('<option></option>').attr("value", detallesPedidos.denominaciontalla);
                 $dPCombo.append(option);
             }
         })
        }
     })
-    //  cambioProductoT();
+    cambioTalla();
+}
+function cambioTalla(){
+        var detallesPedidos;
+        var tallas;
+        var $dPCombo = $("#talla");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($detallesPedidos)){
+		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($tallas)){
+           echo 'tallas = '.json_encode($tallas, JSON_HEX_TAG).';'; }?>
+        
+        tallas.forEach(function(tallaF){
+        
+       if(tallaF.talla==document.getElementById('talla').value){
+        
+        detallesPedidos.forEach(function(detallesPedido){
+            if(detallesPedido.talla==tallaF.talla)
+            {
+                var option = $('<option></option>').attr("value", detallesPedidos.talla);
+                $dPCombo.append(option);
+            }
+        })
+       }
+    })  
 }
       </script>
     <footer class="page-footer blue darken-1">

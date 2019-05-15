@@ -117,76 +117,150 @@
     <div id="test2" class="col s12">
       <div class="container section">
         <div class="row">
-          <form>
+          <form method="POST" action="{{action('Detalle_PedidoController@update', $detalle_pedido[0]->numpedido)}}">
+          @csrf
             <h2 class="header">Módulo: Pedidos-Detalle del Pedido</h2>
-            <h3 class="header">Insertar Pedidos-Detalle</h3>
+            <h3 class="header">Actualizar Pedidos-Detalle</h3>
             <div class="col s12">
-              <div class="col-sm-6">
-                  <select class="form-control" id="codpedido" name="codpedido" onchange="cambioPedido()">
-                      @foreach ($pedidos as $pedidos)
-                      <option value="{{$pedidos->numpedido}}">{{$pedidos->numpedido}}</option>
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Número de Pedido</label>
+                  <select class="form-control" id="numpedido" name="numpedido">                                                                            
+                        <option value="{{$detalle_pedido[0]->numpedido}}" selected>{{$detalle_pedido[0]->numpedido}}</option>
+                  </select>
+              </div>
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Codigo de Producto</label>
+                  <select class="form-control" id="codigoproductot" name="codigoproductot" onchange="cambioProductoT()">
+                      @foreach ($productos as $productos)
+                        @if ($productos->codigoproductot == $detalle_pedido[0]->codigoproductot)
+                          <option value="{{$productos->codigoproductot}}" selected>{{$productos->codigoproductot}}</option>
+                        @else
+                          <option value="{{$productos->codigoproductot}}">{{$productos->codigoproductot}}</option>
+                        @endif                      
                       @endforeach
                   </select>
               </div>
               <div class="input-field col s12">
-                <input placeholder="Código del Pedido" id="codPedido" type="text" class="validate">
-                <label for="first_name">Código del Pedido *</label>
+              <label for="totalunidadespedido">Total de Unidades del Pedido</label>
+                <input placeholder="Total de Unidades del Pedido" id="totalunidadespedido" name="totalunidadespedido" type="number" class="validate" min="1" pattern="^[0-9]+" value="{{$detalle_pedido[0]->totalunidadespedido}}">                
+              </div>                                       
+              <div class="select-field col s12">
+              <label for="denominaciontalla">Denominación Talla</label>
+                  <select class="form-control" id="denominaciontalla" name="denominaciontalla" onchange="cambioDTalla()">
+                      @foreach ($tallas as $tallas)                      
+                        @if ($tallas->denominaciontalla == $detalle_pedido[0]->denominaciontalla)
+                          <option value="{{$tallas->denominaciontalla}}" selected>{{$tallas->denominaciontalla}}</option>
+                        @else
+                          <option value="{{$tallas->denominaciontalla}}">{{$tallas->denominaciontalla}}</option>
+                        @endif    
+                      @endforeach
+                  </select>                  
               </div>
-              <div class="input-field col s12">
-                <input placeholder="Código del Producto" id="codProducto" type="text" class="validate">
-                <label for="first_name">Código del Producto</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Total de Unidades del Pedido" id="totUniPed" type="text" class="validate">
-                <label for="first_name">Total de Unidades del Pedido</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Denominación de la Talla" id="denTall" type="text" class="validate">
-                <label for="first_name">Denominación de la Talla</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Talla" id="talla" type="text" class="validate">
-                <label for="first_name">Talla</label>
+              <div class="select-field col s12">
+              <label for="talla">Talla</label>
+                  <select class="form-control" id="talla" name="talla" onchange="cambioDTalla()">
+                      @foreach ($tallas2 as $tallas)                      
+                        @if ($tallas->talla == $detalle_pedido[0]->talla)
+                          <option value="{{$tallas->talla}}" selected>{{$tallas->talla}}</option>
+                        @else
+                          <option value="{{$tallas->talla}}">{{$tallas->talla}}</option>
+                        @endif                        
+                      @endforeach
+                  </select>                  
               </div>
             </div>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">cancel</i>Cancelar</a>
+            <div class="row">
+            <div class="col-md-5"></div>
+            <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">autorenew</i>Actualizar</button>            
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('detallePedido.index') }}"><i class="material-icons left">cancel</i>Cancelar</a>
           </form> 
         </div>
       </div>
     </div>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
-          cambioPedido();
+          cambioProductoT();
+          cambioDTalla();
+          cambioTalla();
       });
 
-      function cambioPedido(){
-          var asignaturas;
-          var carreras;
-          var $asigCombo = $("#asignatura");
-          $asigCombo.empty(); // remove old options
-          <?php if(isset($asignaturas)){
-          echo 'asignaturas = '.json_encode($asignaturas, JSON_HEX_TAG).';'; }?>
-          <?php if(isset($carreras)){
-                echo 'carreras = '.json_encode($carreras, JSON_HEX_TAG).';'; }?>
-              
-          carreras.forEach(function(carrera){
-              
-            if(carrera.codcarrera==document.getElementById('codcarrera').value){
-              
-              asignaturas.forEach(function(asignatura){
-                  if(asignatura.codcarrera==carrera.codcarrera)
-                  {
-                      var option = $('<option></option>').attr("value", asignatura.codasignatura).text(asignatura.descasignatura);
-                      $asigCombo.append(option);
-                  }
-              })
+function cambioProductoT(){
+        var detallesPedidos;
+        var productosT;
+        var $dPCombo = $("#codigoproductot");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($detallesPedidos)){
+		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($productosT)){
+           echo 'productosT = '.json_encode($productosT, JSON_HEX_TAG).';'; }?>
+        
+        productosT.forEach(function(productoT){
+        
+       if(productoT.codigoproductot==document.getElementById('codigoproductot').value){
+        
+        detallesPedidos.forEach(function(detallesPedido){
+            if(detallesPedido.codigoproductot==productoT.codigoproductot)
+            {
+                var option = $('<option></option>').attr("value", detallesPedidos.codigoproductot);
+                $dPCombo.append(option);
             }
-          })
-          cambioAsignatura();
-      }
+        })
+       }
+    })
+    cambioDTalla();
+}
+function cambioDTalla(){
+        var detallesPedidos;
+        var denominacionTallas;
+        var $dPCombo = $("#denominaciontalla");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($detallesPedidos)){
+		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($denominacionTallas)){
+           echo 'denominacionTallas = '.json_encode($denominacionTallas, JSON_HEX_TAG).';'; }?>
+        
+        denominacionTallas.forEach(function(denominacionTalla){
+        
+       if(denominacionTalla.denominaciontalla==document.getElementById('denominaciontalla').value){
+        
+        detallesPedidos.forEach(function(detallesPedido){
+            if(detallesPedido.denominaciontalla==denominacionTalla.denominaciontalla)
+            {
+                var option = $('<option></option>').attr("value", detallesPedidos.denominaciontalla);
+                $dPCombo.append(option);
+            }
+        })
+       }
+    })
+    cambioTalla();
+}
+function cambioTalla(){
+        var detallesPedidos;
+        var tallas;
+        var $dPCombo = $("#talla");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($detallesPedidos)){
+		echo 'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($tallas)){
+           echo 'tallas = '.json_encode($tallas, JSON_HEX_TAG).';'; }?>
+        
+        tallas.forEach(function(tallaF){
+        
+       if(tallaF.talla==document.getElementById('talla').value){
+        
+        detallesPedidos.forEach(function(detallesPedido){
+            if(detallesPedido.talla==tallaF.talla)
+            {
+                var option = $('<option></option>').attr("value", detallesPedidos.talla);
+                $dPCombo.append(option);
+            }
+        })
+       }
+    })  
+}
       </script>
     <footer class="page-footer blue darken-1">
       <div class="container">

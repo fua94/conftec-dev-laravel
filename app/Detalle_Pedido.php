@@ -10,5 +10,5 @@ class Detalle_Pedido extends Model
     protected $primaryKey = 'numpedido';
     public $incrementing = false;
     public $timestamps = false;
-    protected $fillable = ['codigoproductot','totalunidadespedido','denominaciontalla','talla'];
+    protected $fillable = ['numpedido','codigoproductot','totalunidadespedido','denominaciontalla','talla'];
 }

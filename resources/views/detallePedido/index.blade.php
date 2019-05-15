@@ -125,50 +125,87 @@
             <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">print</i>Imprimir</a>
           </div>
           <div class="col s3">
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </div>
-          
-          
+            <!--<div class="input-field">
+              <input type="text" id="search" >                                          
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>                            
+            </div>-->
+          </div>          
           <br><br>          
-          <br>
-          <table>
-            <tr>
-              <th colspan="7" class="white-text blue darken-3"><center>Empresa</center></th>
-            </tr>
-            <tr class="white-text blue darken-2">         
-              <td colspan='2'><center>Acciones</center></td>
-              <td><center>Código de la Pedido</center></td>
-              <td><center>Código de la Producto</center></td>
-              <td><center>Total de Unidades del Pedido</center></td>
-              <td><center>Denominación de la Talla</center></td>
-              <td><center>Talla</center></td>
-            </tr>
-            <tr>
-            @foreach($detalle_pedido as $dato)              
-                <center>                                
-                    <td>
-                      <a href="{{action('Detalle_PedidoController@edit', $dato->numpedido)}}"><i class="material-icons left">edit</i></a>
-                    </td>
-                    <td>
-                      <form action="{{action('Detalle_PedidoController@destroy', $dato->numpedido)}}" method="post">
-                          @csrf
-                          <input name="_method" type="hidden" value="DELETE">
-                          <button class="btn-default btn-flat" type="submit"><i class="material-icons left">delete</i></button>
-                      </form>                                                                   
-                    </td>              
-                </center>              
-              <td><center>{{$dato['numpedido']}}</center></td>
-              <td><center>{{$dato['codigoproductot']}}</center></td>
-              <td><center>{{$dato['totalunidadespedido']}}</center></td>
-              <td><center>{{$dato['denominaciontalla']}}</center></td>
-              <td><center>{{$dato['talla']}}</center></td>
-            </tr>
-            @endforeach 
-          </table>
+          <br>   
+          <div>       
+          <table id="myTable" class="table table-bordred table-striped">
+                    <thead>
+                      <tr>
+                        <th colspan="7" class="white-text blue darken-3"><center>Empresa</center></th>
+                      </tr>
+                        <tr class="white-text blue darken-2">
+                          <th colspan='2'><center>Acciones</center></th>
+                          <th><center>Código de la Pedido</center></th>
+                          <th><center>Código de la Producto</center></th>
+                          <th><center>Total de Unidades del Pedido</center></th>
+                          <th><center>Denominación de la Talla</center></th>
+                          <th><center>Talla</center></th>
+                        </tr>                        
+                        </thead>  
+                        <tbody>
+                            @if($detalle_pedido->count())  
+                            @foreach($detalle_pedido as $dato)  
+                            <tr>  
+                              <center>   
+                                <td>
+                                  <a href="{{action('Detalle_PedidoController@edit', $dato->numpedido)}}"><i class="material-icons left">edit</i></a>                      
+                                </td>
+                                  <td>
+                                    <form action="{{action('Detalle_PedidoController@destroy', $dato->numpedido)}}" method="post">
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                        <button class="btn-default btn-flat" type="submit"><i class="material-icons left" onclick="return confirm('¿Está seguro que desea eliminar?')">delete</i></button>                          
+                                    </form>                                                                   
+                                  </td>              
+                                </center>              
+                              <td><center>{{$dato['numpedido']}}</center></td>
+                              <td><center>{{$dato['codigoproductot']}}</center></td>
+                              <td><center>{{$dato['totalunidadespedido']}}</center></td>
+                              <td><center>{{$dato['denominaciontalla']}}</center></td>
+                              <td><center>{{$dato['talla']}}</center></td>
+                            </tr>
+                            @endforeach 
+                            @else
+                            <tr>
+                                <td colspan="8">No hay registro !!</td>
+                            </tr>
+                            @endif
+                        </tbody> 
+                        <tfoot>
+                          <td colspan="7">
+                              <div class="pagination">{{ $detalle_pedido->links() }}</div>
+                          </td>
+                        </tfoot>        
+                </table> 
+                {{ $detalle_pedido->links() }}
+                </div>                          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+          <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+          <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+          <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+          <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+          <script>          
+            $(document).ready(function(){                                     
+
+                  $('#myTable').DataTable({
+                  "paging": false,                  
+                  "info": true,
+                  "autoWidth": true,
+                  "searching": true, // Search box and search function will be actived
+                  "dom": '<"top"f>rt<"bottom"ilp><"clear">',
+                  "language": {
+                  "zeroRecords": "No existe registros",
+                  "infoEmpty": "No se econtró ningún registro",
+                  "sSearch": "Buscar:   "
+                      }
+                  });
+              });  
+          </script> 
         </div>
       </div>
     </div>
