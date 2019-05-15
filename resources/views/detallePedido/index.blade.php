@@ -120,7 +120,7 @@
           <h2 class="header">Detalles Pedidos</h2>
           <div class="col s9">
             <a class="waves-effect waves-light blue darken-4 btn" href="{{route('detallePedido.create')}}"><i class="material-icons left">add</i>Añadir Registro</a>            
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">refresh</i>Actualizar Tabla</a>
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('detallePedido.index') }}"><i class="material-icons left">refresh</i>Actualizar Tabla</a>
             <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">file_download</i>Exportar</a>
             <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">print</i>Imprimir</a>
           </div>
@@ -179,7 +179,7 @@
                       <tfoot>
                       <tr class="white-text blue darken-2">
                         <td colspan="7">
-                            <div class="pagination">{{ $detalle_pedido->links() }}</div>
+                            <div class="pagination white-text">{{ $detalle_pedido->links() }}</div>
                         </td>
                       </tr>
                       </tfoot>        
