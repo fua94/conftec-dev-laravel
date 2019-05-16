@@ -27,7 +27,7 @@ class Detalle_PedidoController extends Controller
     }
     public function index()
     {
-        $detalle_pedido = Detalle_Pedido::paginate(4);       
+        $detalle_pedido = Detalle_Pedido::paginate(5);       
         return view('detallePedido.index',['detalle_pedido'=>$detalle_pedido]);//vista,renombre,nombre variable
     }
     public function edit($numpedidoR)//abre la ventana para modificar

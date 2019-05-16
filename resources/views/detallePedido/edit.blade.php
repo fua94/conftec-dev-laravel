@@ -142,7 +142,7 @@
               </div>
               <div class="input-field col s12">
               <label for="totalunidadespedido">Total de Unidades del Pedido</label>
-                <input placeholder="Total de Unidades del Pedido" id="totalunidadespedido" name="totalunidadespedido" type="number" class="validate" min="1" pattern="^[0-9]+" value="{{$detalle_pedido[0]->totalunidadespedido}}">                
+                <input id="totalunidadespedido" name="totalunidadespedido" type="number" class="validate" min="1" pattern="^[0-9]+" max="999" value="{{$detalle_pedido[0]->totalunidadespedido}}" (keypress)="checkIfNumber($event)">                    
               </div>                                       
               <div class="select-field col s12">
               <label for="denominaciontalla">Denominación Talla</label>
