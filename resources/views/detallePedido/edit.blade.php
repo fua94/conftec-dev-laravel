@@ -83,7 +83,7 @@
     <ul id="dropdown3" class="dropdown-content">
       <li><a href="#!">Cliente</a></li>
       <li class="divider"></li>
-      <li><a href="#!">Pedido</a></li>
+      <li><a href="{{ route('pedidoC.index') }}">Pedido</a></li>      
       <li class="divider"></li>
       <li><a href="{{ route('detallePedido.index') }}">Detalle del Pedido</a></li>
       <li class="divider"></li>

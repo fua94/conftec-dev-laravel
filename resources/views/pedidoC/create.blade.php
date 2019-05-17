@@ -1,10 +1,9 @@
 @extends('layout.home')
 
 @section('content')
-    <!-- Normal Menu-->
-    <nav>
+<nav>
       <div class="nav-wrapper blue darken-3">
-        <a href="#!" class="brand-logo">ConfTec</a>
+        <a href="/" class="brand-logo">ConfTec</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <!-- Dropdown Trigger -->
@@ -84,7 +83,7 @@
     <ul id="dropdown3" class="dropdown-content">
       <li><a href="#!">Cliente</a></li>
       <li class="divider"></li>
-      <li><a href="{{ route('pedidoC.index') }}">Pedido</a></li>      
+      <li><a href="{{ route('pedidoC.index') }}">Pedido</a></li>
       <li class="divider"></li>
       <li><a href="{{ route('detallePedido.index') }}">Detalle del Pedido</a></li>
       <li class="divider"></li>
@@ -115,115 +114,99 @@
       <li><a href="collapsible.html">Despacho</a></li>
     </ul>
 
-    
-
-    
-    <div id="test1" class="col s12">
-      <div class="container section">
-        <div class="row">
-          <h2 class="header">Ejemplo de Vista de Visualización</h2>
-          <div class="col s9">
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">add</i>Añadir Registro</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">refresh</i>Actualizar Tabla</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">file_download</i>Exportar</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">print</i>Imprimir</a>
-          </div>
-          <div class="col s3">
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </div>
-          
-          
-          <br><br>
-          <table>
-            <tr>
-              <th colspan="7" class="white-text blue darken-3"><center>Empresa</center></th>
-            </tr>
-            <tr class="white-text blue darken-2">
-              <td>
-                <center>
-                  <label>
-                    <input type="checkbox" />
-                    <span></span>
-                  </label>Seleccionar
-                </center>
-              </td>
-              <td><center>Acciones</center></td>
-              <td><center>Código de la Empresa</center></td>
-              <td><center>Nombre</center></td>
-              <td><center>Sector</center></td>
-              <td><center>País</center></td>
-              <td><center>Categoría</center></td>
-            </tr>
-            <tr>
-              <td>
-                <center>
-                  <label>
-                    <input type="checkbox" />
-                    <span></span>
-                  </label>
-                </center>
-              </td>
-              <td>
-                <center>
-                  <i class="material-icons left">pageview</i>
-                  <i class="material-icons left">edit</i>
-                  <i class="material-icons left">delete</i>
-                  <i class="material-icons left">content_copy</i>
-                </center>
-              </td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-    
-
     <div id="test2" class="col s12">
       <div class="container section">
         <div class="row">
-          <form>
-            <h2 class="header">Ejemplo de Vista de Inserción</h2>
-            <h3 class="header">Empresa</h3>
+          <form method="POST" action="/pedidoC">
+          @csrf
+            <h2 class="header">Módulo: Pedidos-Pedido</h2>
+            <h3 class="header">Insertar Pedido</h3>
             <div class="col s12">
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Código de la empresa *</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Nombre</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Sector</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">País</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Categoría</label>
+              <div class="select-field col s12">
+              <div class="select-field col s12">
+              <label for="codigosucursal">Código de Producto</label>
+                  <select class="form-control" id="codigosucursal" name="codigosucursal" onchange="cambioSucursalT()">
+                      @foreach ($sucursal as $sucursalR)
+                      <option value="{{$sucursalR->codigosucursal}}">{{$sucursalR->codigosucursal}}</option>
+                      @endforeach
+                  </select>
+              </div>                                 
+              <div class="select-field col s12">
+              <label for="codigocliente">Código de Cliente</label>
+                  <select class="form-control" id="codigocliente" name="codigocliente" onchange="cambioClienteT()">
+                      @foreach ($cliente as $clienteR)
+                      <option value="{{$clienteR->codigocliente}}">{{$clienteR->codigocliente}}</option>
+                      @endforeach
+                  </select>                  
               </div>
             </div>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">cancel</i>Cancelar</a>
+            <div class="row">
+            <div class="col-md-5"></div>
+            <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</button>            
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('pedidoC.index') }}"><i class="material-icons left">cancel</i>Cancelar</a>
           </form> 
         </div>
       </div>
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>    
+    <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){          
+          cambioSucursalT();
+          cambioClienteT();
+      });
+function cambioSucursalT(){
+        var pedidosC;
+        var sucursales;
+        var $dPCombo = $("#codigosucursal");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($pedidosC)){
+		echo 'pedidosC = '.json_encode($pedidosC, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($sucursales)){
+           echo 'sucursales = '.json_encode($sucursales, JSON_HEX_TAG).';'; }?>
+        
+        sucursales.forEach(function(sucursal){
+        
+       if(sucursal.codigosucursal==document.getElementById('codigosucursal').value){
+        
+        pedidosC.forEach(function(pedidoC){
+            if(pedidoC.codigosucursal==sucursal.codigosucursal)
+            {
+                var option = $('<option></option>').attr("value", pedidosC.codigosucursal);
+                $dPCombo.append(option);
+            }
+        })
+       }
+    })
+    cambioClienteT();
+}
+function cambioClienteT(){
+        var pedidosC;
+        var clientes;
+        var $dPCombo = $("#codigocliente");
+        //$dPCombo.empty(); // remove old options
+    <?php if(isset($pedidosC)){
+		echo 'pedidosC = '.json_encode($pedidosC, JSON_HEX_TAG).';'; }?>
+    <?php if(isset($clientes)){
+           echo 'clientes = '.json_encode($clientes, JSON_HEX_TAG).';'; }?>
+        
+        clientes.forEach(function(cliente){
+        
+       if(cliente.codigocliente==document.getElementById('codigocliente').value){
+        
+        pedidosC.forEach(function(pedidoC){
+            if(pedidoC.codigocliente==cliente.codigocliente)
+            {
+                var option = $('<option></option>').attr("value", pedidosC.codigocliente);
+                $dPCombo.append(option);
+            }
+        })
+       }
+    })
+}
+      </script>
     <footer class="page-footer blue darken-1">
       <div class="container">
         <div class="row">
@@ -249,8 +232,4 @@
         </div>
       </div>
     </footer>
-
 @endsection
-
-    
-

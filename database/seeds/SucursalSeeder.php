@@ -4,8 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
-class TallasSeeder extends Seeder
+class SucursalSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,10 +12,10 @@ class TallasSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   
+    {
         for ($i=0; $i<30; $i++){
-            DB::table('tallas')->insert([        
-                'denominaciontalla' => Str::random(10),
+            DB::table('sucursal')->insert([            
+                'codigosucursal'=> Str::random(10)        
             ]);
         }
     }

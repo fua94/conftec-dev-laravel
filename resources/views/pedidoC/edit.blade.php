@@ -83,7 +83,7 @@
     <ul id="dropdown3" class="dropdown-content">
       <li><a href="#!">Cliente</a></li>
       <li class="divider"></li>
-      <li><a href="{{ route('pedidoC.index') }}">Pedido</a></li>      
+      <li><a href="{{ route('pedidoC.index') }}">Pedido</a></li>
       <li class="divider"></li>
       <li><a href="{{ route('detallePedido.index') }}">Detalle del Pedido</a></li>
       <li class="divider"></li>
@@ -117,92 +117,76 @@
     <div id="test2" class="col s12">
       <div class="container section">
         <div class="row">
-          <form method="POST" action="/detallePedido">
+          <form method="POST" action="{{action('Detalle_PedidoController@update', $detalle_pedido[0]->numpedido)}}">
           @csrf
             <h2 class="header">Módulo: Pedidos-Detalle del Pedido</h2>
-            <h3 class="header">Insertar Pedidos-Detalle</h3>
+            <h3 class="header">Actualizar Pedidos-Detalle</h3>
             <div class="col s12">
               <div class="select-field col s12">
               <label for="denominaciontalla">Número de Pedido</label>
-                  <select class="form-control" id="numpedido" name="numpedido" onchange="cambioPedido()">
-                      @foreach ($pedidos as $pedidosR)
-                      <option value="{{$pedidosR->numpedido}}">{{$pedidosR->numpedido}}</option>
-                      @endforeach
+                  <select class="form-control" id="numpedido" name="numpedido">                                                                            
+                        <option value="{{$detalle_pedido[0]->numpedido}}" selected>{{$detalle_pedido[0]->numpedido}}</option>
                   </select>
               </div>
               <div class="select-field col s12">
               <label for="denominaciontalla">Codigo de Producto</label>
                   <select class="form-control" id="codigoproductot" name="codigoproductot" onchange="cambioProductoT()">
                       @foreach ($productos as $productos)
-                      <option value="{{$productos->codigoproductot}}">{{$productos->codigoproductot}}</option>
+                        @if ($productos->codigoproductot == $detalle_pedido[0]->codigoproductot)
+                          <option value="{{$productos->codigoproductot}}" selected>{{$productos->codigoproductot}}</option>
+                        @else
+                          <option value="{{$productos->codigoproductot}}">{{$productos->codigoproductot}}</option>
+                        @endif                      
                       @endforeach
                   </select>
               </div>
               <div class="input-field col s12">
               <label for="totalunidadespedido">Total de Unidades del Pedido</label>
-                <input id="totalunidadespedido" name="totalunidadespedido" type="number" min="1" max="999" pattern="^[0-9]+" value="1" (keypress)="checkIfNumber($event)">                
+                <input id="totalunidadespedido" name="totalunidadespedido" type="number" class="validate" min="1" pattern="^[0-9]+" max="999" value="{{$detalle_pedido[0]->totalunidadespedido}}" (keypress)="checkIfNumber($event)">                    
               </div>                                       
               <div class="select-field col s12">
               <label for="denominaciontalla">Denominación Talla</label>
                   <select class="form-control" id="denominaciontalla" name="denominaciontalla" onchange="cambioDTalla()">
-                      @foreach ($tallas as $tallas)
-                      <option value="{{$tallas->denominaciontalla}}">{{$tallas->denominaciontalla}}</option>
+                      @foreach ($tallas as $tallas)                      
+                        @if ($tallas->denominaciontalla == $detalle_pedido[0]->denominaciontalla)
+                          <option value="{{$tallas->denominaciontalla}}" selected>{{$tallas->denominaciontalla}}</option>
+                        @else
+                          <option value="{{$tallas->denominaciontalla}}">{{$tallas->denominaciontalla}}</option>
+                        @endif    
                       @endforeach
                   </select>                  
               </div>
               <div class="select-field col s12">
               <label for="talla">Talla</label>
                   <select class="form-control" id="talla" name="talla" onchange="cambioDTalla()">
-                      @foreach ($tallas2 as $tallas)
-                      <option value="{{$tallas->talla}}">{{$tallas->talla}}</option>
+                      @foreach ($tallas2 as $tallas)                      
+                        @if ($tallas->talla == $detalle_pedido[0]->talla)
+                          <option value="{{$tallas->talla}}" selected>{{$tallas->talla}}</option>
+                        @else
+                          <option value="{{$tallas->talla}}">{{$tallas->talla}}</option>
+                        @endif                        
                       @endforeach
                   </select>                  
               </div>
             </div>
             <div class="row">
             <div class="col-md-5"></div>
-            <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</button>            
+            <button type="submit" class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">autorenew</i>Actualizar</button>            
             <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('detallePedido.index') }}"><i class="material-icons left">cancel</i>Cancelar</a>
           </form> 
         </div>
       </div>
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>    
-    <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
-          cambioPedido();
           cambioProductoT();
           cambioDTalla();
           cambioTalla();
       });
-      function cambioPedido(){
-        var detallesPedidos;
-        var pedidos;
-        var $dPCombo = $("#numpedido");
-        //$dPCombo.empty(); // remove old options
-    <?php if(isset($detallesPedidos)){
-		'detallesPedidos = '.json_encode($detallesPedidos, JSON_HEX_TAG).';'; }?>
-    <?php if(isset($pedidos)){
-           echo 'pedidos = '.json_encode($pedidos, JSON_HEX_TAG).';'; }?>
-        
-        pedidos.forEach(function(pedido){
-        
-       if(pedido.numpedido==document.getElementById('numpedido').value){
-        
-        detallesPedidos.forEach(function(detallesPedido){
-            if(detallesPedido.numpedido==pedido.numpedido)
-            {
-                var option = $('<option></option>').attr("value", detallesPedidos.numpedido);
-                $dPCombo.append(option);
-            }
-        })
-       }
-    })
-    cambioProductoT();
-}
+
 function cambioProductoT(){
         var detallesPedidos;
         var productosT;

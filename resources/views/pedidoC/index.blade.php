@@ -1,10 +1,9 @@
 @extends('layout.home')
 
 @section('content')
-    <!-- Normal Menu-->
-    <nav>
+<nav>
       <div class="nav-wrapper blue darken-3">
-        <a href="#!" class="brand-logo">ConfTec</a>
+        <a href="/" class="brand-logo">ConfTec</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <!-- Dropdown Trigger -->
@@ -115,113 +114,99 @@
       <li><a href="collapsible.html">Despacho</a></li>
     </ul>
 
-    
-
-    
     <div id="test1" class="col s12">
       <div class="container section">
         <div class="row">
-          <h2 class="header">Ejemplo de Vista de Visualización</h2>
+          <h2 class="header">Pedido</h2>
           <div class="col s9">
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">add</i>Añadir Registro</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">refresh</i>Actualizar Tabla</a>
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{route('pedidoC.create')}}"><i class="material-icons left">add</i>Añadir Registro</a>            
+            <a class="waves-effect waves-light blue darken-4 btn" href="{{ route('pedidoC.index') }}"><i class="material-icons left">refresh</i>Actualizar Tabla</a>
             <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">file_download</i>Exportar</a>
             <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">print</i>Imprimir</a>
           </div>
           <div class="col s3">
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </div>
-          
-          
-          <br><br>
-          <table>
-            <tr>
-              <th colspan="7" class="white-text blue darken-3"><center>Empresa</center></th>
-            </tr>
-            <tr class="white-text blue darken-2">
-              <td>
-                <center>
-                  <label>
-                    <input type="checkbox" />
-                    <span></span>
-                  </label>Seleccionar
-                </center>
-              </td>
-              <td><center>Acciones</center></td>
-              <td><center>Código de la Empresa</center></td>
-              <td><center>Nombre</center></td>
-              <td><center>Sector</center></td>
-              <td><center>País</center></td>
-              <td><center>Categoría</center></td>
-            </tr>
-            <tr>
-              <td>
-                <center>
-                  <label>
-                    <input type="checkbox" />
-                    <span></span>
-                  </label>
-                </center>
-              </td>
-              <td>
-                <center>
-                  <i class="material-icons left">pageview</i>
-                  <i class="material-icons left">edit</i>
-                  <i class="material-icons left">delete</i>
-                  <i class="material-icons left">content_copy</i>
-                </center>
-              </td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-              <td><center>Ejemplo 1</center></td>
-            </tr>
-          </table>
+            <!--<div class="input-field">
+              <input type="text" id="search" >                                          
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>                            
+            </div>-->
+          </div>          
+          <br><br>          
+          <br>   
+          <div>       
+                <table id="myTable" class="table table-bordred table-striped">
+                  <thead>
+                    <tr>
+                      <th colspan="7" class="white-text blue darken-3"><center>Empresa</center></th>
+                    </tr>
+                      <tr class="white-text blue darken-2">
+                        <th colspan='2'><center>Acciones</center></th>
+                        <th><center>Código del Pedido</center></th>
+                        <th><center>Código de la Sucursal</center></th>
+                        <th><center>Código del Cliente</center></th>
+                      </tr>                        
+                      </thead>  
+                      <tbody>
+                          @if($pedidoT->count())  
+                          @foreach($pedidoT as $dato)  
+                          <tr>  
+                            <center>   
+                              <td>
+                                <a href="{{action('PedidoController@edit', $dato->numpedido)}}"><i class="material-icons left">edit</i></a>                      
+                              </td>
+                                <td>
+                                  <form action="{{action('PedidoController@destroy', $dato->numpedido)}}" method="post">
+                                      @csrf
+                                      <input name="_method" type="hidden" value="DELETE">
+                                      <button class="btn-default btn-flat" type="submit"><i class="material-icons left" onclick="return confirm('¿Está seguro que desea eliminar?')">delete</i></button>                          
+                                  </form>                                                                   
+                                </td>              
+                              </center>              
+                            <td><center>{{$dato['numpedido']}}</center></td>
+                            <td><center>{{$dato['codigosucursal']}}</center></td>
+                            <td><center>{{$dato['codigocliente']}}</center></td>
+                          </tr>
+                          @endforeach 
+                          @else
+                          <tr>
+                              <td colspan="8">No hay registro !!</td>
+                          </tr>
+                          @endif
+                      </tbody> 
+                      <tfoot>
+                      <tr class="white-text blue darken-2">
+                        <td colspan="7">
+                            <div class="pagination white-text">{{ $pedidoT->links() }}</div>
+                        </td>
+                      </tr>
+                      </tfoot>        
+              </table> 
+          </div>                          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+          <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+          <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+          <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+          <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+          <script>          
+            $(document).ready(function(){                                     
+
+                  $('#myTable').DataTable({
+                  "paging": false,                  
+                  "info": true,
+                  "autoWidth": true,
+                  "searching": true, // Search box and search function will be actived
+                  "dom": '<"top"f>rt<"bottom"ilp><"clear">',
+                  "language": {
+                  "zeroRecords": "No existe registros",
+                  "infoEmpty": "No se econtró ningún registro",
+                  "sSearch": "Buscar:   "
+                      }
+                  });
+              });  
+          </script> 
         </div>
       </div>
     </div>
     
-
-    <div id="test2" class="col s12">
-      <div class="container section">
-        <div class="row">
-          <form>
-            <h2 class="header">Ejemplo de Vista de Inserción</h2>
-            <h3 class="header">Empresa</h3>
-            <div class="col s12">
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Código de la empresa *</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Nombre</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Sector</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">País</label>
-              </div>
-              <div class="input-field col s12">
-                <input placeholder="Código de la Empresa" id="first_name" type="text" class="validate">
-                <label for="first_name">Categoría</label>
-              </div>
-            </div>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">check</i>Ingresar</a>
-            <a class="waves-effect waves-light blue darken-4 btn"><i class="material-icons left">cancel</i>Cancelar</a>
-          </form> 
-        </div>
-      </div>
-    </div>
-
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <footer class="page-footer blue darken-1">
@@ -249,8 +234,4 @@
         </div>
       </div>
     </footer>
-
 @endsection
-
-    
-

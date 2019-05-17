@@ -15,6 +15,8 @@ class CreateProductoTSTable extends Migration
     {
         Schema::create('producto_t', function (Blueprint $table) {
             $table->string('codigoproductot');
+            $table->primary('codigoproductot');
+            
             $table->string('codigodisenadorproducto');
             $table->integer('codigounidadmedida');
             $table->integer('codigotipoproducto');

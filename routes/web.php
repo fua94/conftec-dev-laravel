@@ -17,7 +17,10 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/', 'FrontEndController@index');
-//Route::view('/pagDetallePedido','detalle_pedido');
+Route::get('/', 'FrontEndController@index');    
+//detalles-pedidos
 Route::resource('detallePedido', 'Detalle_PedidoController');
 Route::post('actualizarDetallePedidoURL', 'Detalle_PedidoController@update');
+//pedido
+Route::resource('pedidoC', 'PedidoController');
+Route::post('actualizarPedidoURL', 'PedidoController@update');

@@ -14,9 +14,17 @@ class CreatePedidosTable extends Migration
     public function up()
     {
         Schema::create('pedido', function (Blueprint $table) {
-            $table->integer('numpedido')->autoIncrement();
+            
+            $table->integer('numpedido')->autoIncrement();                        
+
             $table->string('codigosucursal');            
-            $table->string('codigocliente');
+            $table->foreign('codigosucursal')
+            ->references('codigosucursal')->on('sucursal');
+
+            $table->string('codigocliente');            
+            $table->foreign('codigocliente')
+            ->references('codigocliente')->on('cliente');
+            
         });
     }
 

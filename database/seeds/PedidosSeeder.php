@@ -12,10 +12,12 @@ class PedidosSeeder extends Seeder
      * @return void
      */
     public function run()
-    {        
-        DB::table('pedido')->insert([               
-            'codigosucursal'=> Str::random(10),
-            'codigocliente'=> Str::random(10),                 
-        ]);
+    {   
+        for ($i=0; $i<5; $i++){     
+            DB::table('pedido')->insert([               
+                'codigosucursal'=> Str::random(10),
+                'codigocliente'=> Str::random(10),                 
+            ]);
+        }
     }
 }
