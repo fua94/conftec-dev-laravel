@@ -16,7 +16,7 @@ class CreateEmpresasTable extends Migration
         Schema::create('empresa', function (Blueprint $table) {
             $table->String('CODIGOEMPRESA', 15);
             $table->String('NOMBREEMPRESA', 50);
-            
+
             $table->primary('CODIGOEMPRESA');
         });
     }
@@ -28,6 +28,6 @@ class CreateEmpresasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresas');
+        Schema::dropIfExists('empresa');
     }
 }

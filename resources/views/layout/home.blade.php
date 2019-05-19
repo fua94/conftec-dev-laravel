@@ -64,7 +64,7 @@
       <li class="divider"></li>
       <li><a href="#!">Calendario</a></li>
       <li class="divider"></li>
-      <li><a href="#!">Tipo de Descuento</a></li>
+      <li><a href="{{url('descuentos')}}">Tipo de Descuento</a></li>
       <li class="divider"></li>
       <li><a href="#!">Descuento Programado</a></li>
       <li class="divider"></li>

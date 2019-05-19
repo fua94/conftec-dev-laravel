@@ -13,3 +13,8 @@ Route::get('/cliente', 'ClienteController@showDeleteView');
 Route::resource('/medidas', 'UnidadMedidaController');
 Route::post('/medidas/buscar', 'UnidadMedidaController@buscar')->name('medidas.find');
 Route::get('/medida', 'UnidadMedidaController@showDeleteView');
+
+//tipo descuento
+Route::resource('/descuentos', 'TipoDescuentoController');
+Route::post('/descuentos/buscar', 'TipoDescuentoController@buscar')->name('descuentos.find');
+Route::get('/descuento', 'TipoDescuentoController@showDeleteView');

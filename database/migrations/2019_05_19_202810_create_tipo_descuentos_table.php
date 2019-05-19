@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUnidadMedidasTable extends Migration
+class CreateTipoDescuentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateUnidadMedidasTable extends Migration
      */
     public function up()
     {
-        Schema::create('unidad_medida', function (Blueprint $table) {
-            $table->String('CODIGOUNIDADMEDIDA', 15);
+        Schema::create('tipo_descuento', function (Blueprint $table) {
+            $table->String('CODIGOTIPODESCUENTO', 15);
             $table->String('CODIGOEMPRESA', 15)->nullable();
-            $table->String('NOMBREUNIDADMEDIDA', 15);
-            $table->String('DESCRIPCIONUNIDADMEDIDA', 100);
+            $table->String('DESCRIPCIONTIPODESC', 50);
+            $table->decimal('PORCENTAJETIPODESC', 10, 2);
 
-            $table->primary('CODIGOUNIDADMEDIDA');
+            $table->primary('CODIGOTIPODESCUENTO');
             $table->foreign('CODIGOEMPRESA')->references('CODIGOEMPRESA')->on('empresa');
         });
     }
@@ -31,6 +31,6 @@ class CreateUnidadMedidasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unidad_medida');
+        Schema::dropIfExists('tipo_descuento');
     }
 }
