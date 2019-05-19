@@ -9,13 +9,13 @@ class Ciudad extends Model
     protected $table = 'ciudad';
     protected $primaryKey = 'CODIGOCIUDAD';
     public $timestamps = false;
-    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = [
         'CODIGOCIUDAD',
         'NOMBRECIUDAD'
     ];
 
     public function clientes(){
-        return $this->hasMany('App\Models\Cliente', 'CODIGOCLIENTE', 'CODIGOCLIENTE'); 
+        return $this->hasMany('App\Models\Cliente', 'CODIGOCLIENTE', 'CODIGOCLIENTE');
     }
 }

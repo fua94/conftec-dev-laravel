@@ -107,13 +107,35 @@ class ClienteController extends Controller
     public function buscar(Request $request)
     {
         $query = $request->SEARCH;
-        $listaClientes = Cliente::where('CODIGOCLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('NOMBRECLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('DIRECCIONCLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('EMPRESACLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('EMAILCLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('TELEFONOCLIENTE', 'LIKE', '%'.$query.'%')
-                                    ->get();
+
+        $empresa = Empresa::where('NOMBREEMPRESA', 'LIKE', '%'.$query.'%')->first();
+        $ciudad = Ciudad::where('NOMBRECIUDAD', 'LIKE', '%'.$query.'%')->first();
+
+        if($empresa != null){
+            $query = $empresa->CODIGOEMPRESA;
+        }
+        else if($ciudad != null) {
+            $query = $ciudad->CODIGOCIUDAD;
+        }
+
+        if(strtolower($query) == 'casual'){
+            $listaClientes = Cliente::where('TIPOCLIENTE', 'C')->get();
+        }
+        else if (strtolower($query) == 'habitual'){
+            $listaClientes = Cliente::where('TIPOCLIENTE', 'H')->get();
+        }
+        else {
+            $listaClientes = Cliente::where('CODIGOCLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('CODIGOEMPRESA', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('NOMBRECLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('DIRECCIONCLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('EMPRESACLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('EMAILCLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('TELEFONOCLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->orWhere('CODIGOCIUDADCLIENTE', 'LIKE', '%'.$query.'%')
+                                        ->get();
+        }
+
         return view('Clientes/index', [
             'clientes' => $listaClientes
         ]);

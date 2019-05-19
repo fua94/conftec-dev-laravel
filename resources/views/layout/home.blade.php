@@ -58,7 +58,7 @@
       <li class="divider"></li>
       <li><a href="#!">Usuario</a></li>
       <li class="divider"></li>
-      <li><a href="#!">Unidad de Medida</a></li>
+      <li><a href="{{url('medidas')}}">Unidad de Medida</a></li>
       <li class="divider"></li>
       <li><a href="#!">Unidad de Medida Alternativa</a></li>
       <li class="divider"></li>

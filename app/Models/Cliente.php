@@ -9,7 +9,7 @@ class Cliente extends Model
     protected $table = 'cliente';
     protected $primaryKey = 'CODIGOCLIENTE';
     public $timestamps = false;
-    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = [
         'CODIGOCLIENTE',
         'CODIGOEMPRESA',
