@@ -98,7 +98,7 @@ class UnidadMedidaController extends Controller
         }
 
         $listaUnidadMedidas = UnidadMedida::where('CODIGOUNIDADMEDIDA', 'LIKE', '%'.$query.'%')
-                                    ->orWhere('CODIGOEMPRESA', 'LIKE', '%'.$empresa->CODIGOEMPRESA.'%')
+                                    ->orWhere('CODIGOEMPRESA', 'LIKE', '%'.$query.'%')
                                     ->orWhere('NOMBREUNIDADMEDIDA', 'LIKE', '%'.$query.'%')
                                     ->orWhere('DESCRIPCIONUNIDADMEDIDA', 'LIKE', '%'.$query.'%')
                                     ->get();
